@@ -192,6 +192,11 @@ export const googleLogin = async (req, res) => {
     }
 
     const payload = await response.json();
+    
+    if (payload.aud !== process.env.GOOGLE_CLIENT_ID) {
+      return handleError(res, "Google Client ID mismatch", 401);
+    }
+
     const { email, name, picture, email_verified } = payload;
 
     if (!email) {

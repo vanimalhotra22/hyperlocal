@@ -59,15 +59,33 @@ const Login = () => {
   };
 
   useEffect(() => {
+    const initializeGoogle = () => {
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: handleGoogleSuccess,
+        });
+        window.google.accounts.id.renderButton(
+          document.getElementById("google-signin-button"),
+          { theme: "outline", size: "large", width: "350px" }
+        );
+      }
+    };
+
     if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: "512468543123-eg1a9hhqf95cqt29as1rg4nijscmeitn.apps.googleusercontent.com",
-        callback: handleGoogleSuccess,
-      });
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-signin-button"),
-        { theme: "outline", size: "large", width: "350px" }
-      );
+      initializeGoogle();
+    } else {
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts++;
+        if (window.google) {
+          initializeGoogle();
+          clearInterval(interval);
+        } else if (attempts > 50) {
+          clearInterval(interval);
+        }
+      }, 100);
+      return () => clearInterval(interval);
     }
   }, []);
 
