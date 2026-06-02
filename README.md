@@ -1,4 +1,4 @@
-Markdown
+
 # 🌐 Hyperlocal Service Marketplace
 
 A premium, modern, and fully integrated hyperlocal service marketplace built on the **MERN Stack**. The platform dynamically matches customers with verified nearby service providers (plumbers, cleaners, electricians, etc.) using geospatial indexing. It features a high-fidelity responsive interface with dual-theme capabilities, unified analytical dashboards, and enterprise-grade Google OAuth integration.
